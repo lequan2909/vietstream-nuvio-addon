@@ -1,5 +1,5 @@
 # Fly.io — deploy bằng: flyctl launch (từ thư mục repo) rồi flyctl deploy
-app = "vietstream-addon"
+app = "vietstream-trung"
 primary_region = "sin"
 
 [build]
