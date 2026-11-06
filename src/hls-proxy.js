@@ -11,6 +11,15 @@ const { CONFIG } = require('./config');
 
 const router = express.Router();
 
+// Chặn toàn bộ truy cập proxy khi tính năng bị tắt để tránh phát sinh lưu lượng mạng
+router.use('/hls', (req, res, next) => {
+  const list = CONFIG.proxyProviders || [];
+  if (list.includes('none') || list.length === 0) {
+    return res.status(403).send('HLS proxy is disabled');
+  }
+  next();
+});
+
 function b64e(s) {
   return Buffer.from(String(s == null ? '' : s)).toString('base64url');
 }

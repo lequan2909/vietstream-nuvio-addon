@@ -40,8 +40,8 @@ const PROVIDERS = {
     siteUrl: 'https://phim.nguonc.com',
     referer: 'https://phim.nguonc.com/',
     enabled: ENABLED_LIST ? ENABLED_LIST.includes('nguonc') : true,
-    // Link StreamC của NguonC cần Referer → mặc định đi qua HLS proxy của addon
-    proxy: true
+    // Link StreamC của NguonC (đã tắt proxy theo cấu hình chống tốn egress)
+    proxy: false
   },
   vnstream: {
     id: 'vnstream',
@@ -108,7 +108,7 @@ const CONFIG = {
     process.env.USER_AGENT ||
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
   // Danh sách nguồn được bọc qua HLS proxy của addon ("*" = tất cả, "none" = không nguồn nào)
-  proxyProviders: csv('PROXY_PROVIDERS', ['nguonc']),
+  proxyProviders: csv('PROXY_PROVIDERS', ['none']),
   manifest: {
     id: 'community.vietstream',
     version: process.env.VERSION || '1.1.0',
