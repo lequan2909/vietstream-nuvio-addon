@@ -9,6 +9,7 @@ primary_region = "sin"
   PORT = "7001"
   NODE_ENV = "production"
   PROXY_PROVIDERS = "none"
+  PROVIDERS = "kkphim,k20,phim4k,xem20"
 
 [http_service]
   internal_port = 7001

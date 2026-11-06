@@ -28,6 +28,7 @@ class Phim4kProvider extends BaseProvider {
   }
 
   toMeta(it) {
+    const q = it.quality === 'HD' ? '1080p / 4K' : (it.quality || '1080p / 4K');
     return {
       id: `${this.prefix}${it.slug}`,
       type: it.type === 'series' ? 'series' : 'movie',
@@ -35,7 +36,7 @@ class Phim4kProvider extends BaseProvider {
       poster: it.poster,
       posterShape: 'poster',
       background: it.background,
-      releaseInfo: [it.quality, it.lang, it.year].filter(Boolean).join(' · ') || (it.year ? String(it.year) : undefined),
+      releaseInfo: [q, it.lang, it.year].filter(Boolean).join(' · ') || (it.year ? String(it.year) : undefined),
       year: it.year,
       imdbId: it.imdbId || undefined
     };
@@ -121,6 +122,14 @@ class Phim4kProvider extends BaseProvider {
       return { externalUrl: ep.embed };
     }
     return null;
+  }
+
+  async streamsFromDetail(d, { season, episode }) {
+    const streams = await super.streamsFromDetail(d, { season, episode });
+    return streams.map((s) => {
+      s.name = s.name.replace(/\bHD\b/, '1080p / 4K');
+      return s;
+    });
   }
 
   async streamsFromSlug(slug, type, season, episode) {
